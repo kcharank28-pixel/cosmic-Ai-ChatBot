@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AstroBot - Next-Generation AI Space & Astrophysics Chatbot powered by OpenRouter and Flask.">
+    <title>AstroBot ✦ Cosmic AI Space Explorer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Highlight.js for code blocks in markdown -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="space-theme">
+    <!-- Interactive Background Canvas for Twinkling Stars & Nebulae -->
+    <canvas id="starfield-canvas"></canvas>
+    
+    <!-- Ambient Nebula Light Glows -->
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+    <div class="nebula nebula-3"></div>
+
+    <!-- Main App Container -->
+    <div class="app-layout">
+        
+        <!-- Navigation Bar -->
+        <header class="navbar glass-panel">
+            <div class="nav-brand">
+                <div class="brand-avatar">
+                    <div class="pulsar-ring"></div>
+                    <i class="fa-solid fa-satellite-dish brand-icon"></i>
+                </div>
+                <div class="brand-info">
+                    <div class="brand-title">
+                        <span class="orbitron-font">ASTRO</span><span class="accent-text orbitron-font">BOT</span>
+                        <span class="version-tag">v2.0</span>
+                    </div>
+                    <span class="brand-subtitle"><i class="fa-solid fa-sparkles"></i> Deep Space Intelligence</span>
+                </div>
+            </div>
+
+            <!-- Domain Status Badge -->
+            <div class="domain-badge-container">
+                <div class="domain-badge">
+                    <span class="pulse-beacon"></span>
+                    <i class="fa-solid fa-shuttle-space"></i>
+                    <span class="domain-text">Domain: <strong>Space & Cosmology</strong></span>
+                </div>
+            </div>
+
+            <!-- Navigation Actions -->
+            <div class="nav-actions">
+                <button id="sound-toggle-btn" class="nav-btn" title="Toggle Cosmic SFX" aria-label="Toggle Sound Effects">
+                    <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+                    <span class="btn-tooltip">Sound: On</span>
+                </button>
+                <button id="export-chat-btn" class="nav-btn" title="Export Log (Markdown)" aria-label="Export Chat Log">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                    <span class="btn-tooltip">Export Log</span>
+                </button>
+                <button id="clear-chat-nav-btn" class="nav-btn danger-btn" title="Purge Transmission History" aria-label="Clear Chat History">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span class="btn-tooltip">Clear Chat</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body Wrapper -->
+        <main class="main-content">
+            
+            <!-- Hero Section -->
+            <section class="hero-section glass-panel">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-meteor"></i> MISSION CONTROL ✦ ORBITAL INTERFACE
+                </div>
+                <h1 class="hero-title">
+                    Unravel the Mysteries of the <span class="gradient-text orbitron-font">Cosmos</span>
+                </h1>
+                <p class="hero-description">
+                    Connect with your AI Space Specialist. Ask about astrophysics, black holes, exoplanets, 
+                    NASA/ESA missions, rocket propulsion, or the origin of the universe.
+                </p>
+
+                <!-- Cosmic Live Stats Matrix -->
+                <div class="cosmic-stats-matrix">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-circle-notch fa-spin-pulse"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-value">93B ly</span>
+                            <span class="stat-label">Observable Universe</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-satellite"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-value">5,600+</span>
+                            <span class="stat-label">Exoplanets Cataloged</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-value">JWST / Hubble</span>
+                            <span class="stat-label">Active Telescopes</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-value">Artemis III</span>
+                            <span class="stat-label">Next Lunar Landing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Starters / Prompt Quick Chips -->
+                <div class="prompt-chips-wrapper">
+                    <div class="chips-label"><i class="fa-regular fa-compass"></i> Popular Inquiries:</div>
+                    <div class="prompt-chips">
+                        <button class="chip-btn" data-prompt="What are the most groundbreaking discoveries made by the James Webb Space Telescope?">
+                            <i class="fa-solid fa-telescope"></i> JWST Discoveries
+                        </button>
+                        <button class="chip-btn" data-prompt="How do supermassive black holes warp spacetime and affect time dilation?">
+                            <i class="fa-solid fa-circle-radiation"></i> Black Hole Physics
+                        </button>
+                        <button class="chip-btn" data-prompt="Explain the Artemis Mission objectives to build a permanent base on the Moon.">
+                            <i class="fa-solid fa-moon"></i> Artemis Lunar Base
+                        </button>
+                        <button class="chip-btn" data-prompt="Why do scientists believe Jupiter's moon Europa might harbor alien microbial life?">
+                            <i class="fa-solid fa-dna"></i> Life on Europa
+                        </button>
+                        <button class="chip-btn" data-prompt="What happened during the Cosmic Inflation epoch right after the Big Bang?">
+                            <i class="fa-solid fa-atom"></i> The Big Bang
+                        </button>
+                        <button class="chip-btn" data-prompt="How do ion thrusters compare with chemical rocket engines for deep space voyages?">
+                            <i class="fa-solid fa-fire-flame-curved"></i> Rocket Propulsion
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Interface Box -->
+            <section class="chat-container glass-panel">
+                
+                <!-- Chat Window Header -->
+                <div class="chat-header">
+                    <div class="chat-header-left">
+                        <div class="status-indicator online"></div>
+                        <div class="chat-header-info">
+                            <span class="chat-title orbitron-font">ORBITAL COMM LINK</span>
+                            <span class="chat-subtitle"><i class="fa-solid fa-signal-stream"></i> OpenRouter Neural Engine • Ready</span>
+                        </div>
+                    </div>
+                    <div class="chat-header-right">
+                        <span class="token-badge"><i class="fa-solid fa-shield-halved"></i> Space Guardrails: Active</span>
+                        <button id="scroll-bottom-btn" class="icon-action-btn hidden" title="Scroll to bottom">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Feed -->
+                <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
+                    
+                    <!-- AstroBot Welcome Message -->
+                    <div class="message bot-message entrance-animation">
+                        <div class="message-avatar bot-avatar">
+                            <div class="avatar-glow"></div>
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="message-body">
+                            <div class="message-meta">
+                                <span class="sender-name">AstroBot AI</span>
+                                <span class="badge-role">Astrophysicist</span>
+                                <span class="message-time" id="welcome-time">Just now</span>
+                            </div>
+                            <div class="message-content markdown-body">
+                                <p><strong>Greetings, Explorer! 🌌</strong> Welcome to the orbital mission bridge.</p>
+                                <p>I am <strong>AstroBot</strong>, your dedicated AI specialist in <strong>Astronomy, Cosmology, Astrophysics, and Space Technology</strong>.</p>
+                                <p>You can ask me anything about:</p>
+                                <ul>
+                                    <li>🪐 <strong>Planetary Science:</strong> Solar system bodies, oceans of Europa, Martian geology.</li>
+                                    <li>🌌 <strong>Deep Cosmology:</strong> Dark matter, cosmic microwave background, stellar evolution.</li>
+                                    <li>🕳️ <strong>Relativity & Black Holes:</strong> Event horizons, gravitational waves, Hawking radiation.</li>
+                                    <li>🚀 <strong>Spaceflight:</strong> Starship, Artemis, James Webb Telescope, orbital mechanics.</li>
+                                </ul>
+                                <blockquote>
+                                    <em>Note: I am calibrated exclusively for Space & Cosmology. Select a prompt above or transmit your query below!</em>
+                                </blockquote>
+                            </div>
+                            <div class="message-actions">
+                                <button class="msg-action-btn copy-btn" title="Copy response to clipboard">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                                <button class="msg-action-btn speak-btn" title="Listen to response (TTS)">
+                                    <i class="fa-solid fa-volume-high"></i> Speak
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Typing / Transmission Indicator -->
+                <div class="typing-indicator-container hidden" id="typing-indicator">
+                    <div class="message-avatar bot-avatar">
+                        <div class="avatar-glow pulse-fast"></div>
+                        <i class="fa-solid fa-satellite-dish"></i>
+                    </div>
+                    <div class="typing-bubble">
+                        <div class="cosmic-pulse-dots">
+                            <span class="dot dot-1"></span>
+                            <span class="dot dot-2"></span>
+                            <span class="dot dot-3"></span>
+                        </div>
+                        <span class="typing-text">Receiving deep space telemetry from OpenRouter...</span>
+                    </div>
+                </div>
+
+                <!-- Input Area Bar -->
+                <div class="chat-input-wrapper">
+                    <form id="chat-form" class="chat-form" onsubmit="return false;">
+                        
+                        <!-- Voice Input Button -->
+                        <button type="button" id="voice-btn" class="input-tool-btn" title="Voice Input (Speech-to-Text)" aria-label="Speech Recognition">
+                            <i class="fa-solid fa-microphone" id="voice-icon"></i>
+                        </button>
+
+                        <!-- Input Textarea -->
+                        <div class="textarea-container">
+                            <textarea 
+                                id="user-input" 
+                                class="chat-textarea" 
+                                placeholder="Transmit a query about stars, black holes, exoplanets, rockets..." 
+                                rows="1" 
+                                maxlength="4000"
+                                required
+                            ></textarea>
+                            <span class="char-counter" id="char-counter">0/4000</span>
+                        </div>
+
+                        <!-- Send Button -->
+                        <button type="submit" id="send-btn" class="send-btn" aria-label="Send Message" disabled>
+                            <span class="send-label">Transmit</span>
+                            <i class="fa-solid fa-paper-plane send-icon"></i>
+                        </button>
+                    </form>
+
+                    <!-- Input Footer Info -->
+                    <div class="input-hints">
+                        <span><kbd>Enter ↵</kbd> to transmit • <kbd>Shift + Enter</kbd> for line break</span>
+                        <span class="status-live"><i class="fa-solid fa-circle-check"></i> Model: OpenRouter Space Engine</span>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-quote">
+                <i class="fa-solid fa-quote-left"></i>
+                <span>"Somewhere, something incredible is waiting to be known."</span>
+                <span class="quote-author">— Dr. Carl Sagan</span>
+            </div>
+            <div class="footer-meta">
+                <span>AstroBot Cosmic AI © 2026 • Powered by Flask & OpenRouter API</span>
+                <div class="footer-links">
+                    <a href="https://openrouter.ai" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-network-wired"></i> OpenRouter</a>
+                    <a href="https://nasa.gov" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i> NASA</a>
+                    <a href="https://esa.int" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-satellite"></i> ESA</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div id="toast-notification" class="toast hidden">
+        <i class="fa-solid fa-circle-info" id="toast-icon"></i>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <!-- External Script Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <!-- Custom Application Logic -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

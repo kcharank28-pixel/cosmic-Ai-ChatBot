@@ -1,0 +1,22 @@
+{
+  "name": "space-chatbot",
+  "version": "2.0.0",
+  "description": "AstroBot - Deep Space & Astrophysics AI Chatbot powered by OpenRouter and Flask",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py",
+    "dev": "python app.py",
+    "backend": "python app.py"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "space",
+    "astrophysics",
+    "cosmology",
+    "flask",
+    "openrouter"
+  ],
+  "author": "AstroBot Team",
+  "license": "MIT"
+}
